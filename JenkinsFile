@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+                script {
+                        bat './gradlew app:test'
+                        bat './gradlew core:test'  
+                } 
+            }
+        }
+        stage('Results') {
+            steps {
+            publishHTML([allowMissing: false,
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
+            reportDir: 
+            'E:/Poly/Session8/LOG8371/Lab/Lab1/AntennaPod/core/build/reports/tests/testPlayReleaseUnitTest',
+            reportFiles: 'index.html',
+            reportName: 'Test results'
+            ])
+            }
+        }
+    }
+}
